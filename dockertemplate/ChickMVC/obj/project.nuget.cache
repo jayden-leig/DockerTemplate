@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1nnEIwadSuA=",
+  "dgSpecHash": "3q/1BpRVW08=",
   "success": true,
-  "projectFilePath": "C:\\Users\\lab_services_student\\dockertemplate\\DockerChicken\\ChickMVC\\ChickMVC.csproj",
+  "projectFilePath": "C:\\Users\\lab_services_student\\Documents\\GitHub\\DockerTemplate\\dockertemplate\\ChickMVC\\ChickMVC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lab_services_student\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.23.0\\microsoft.visualstudio.azure.containers.tools.targets.1.23.0.nupkg.sha512"
   ],

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lab_services_student\\dockertemplate\\DockerChicken\\ChickMVC\\ChickMVC.csproj": {}
+    "C:\\Users\\lab_services_student\\Documents\\GitHub\\DockerTemplate\\dockertemplate\\ChickMVC\\ChickMVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lab_services_student\\dockertemplate\\DockerChicken\\ChickMVC\\ChickMVC.csproj": {
+    "C:\\Users\\lab_services_student\\Documents\\GitHub\\DockerTemplate\\dockertemplate\\ChickMVC\\ChickMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lab_services_student\\dockertemplate\\DockerChicken\\ChickMVC\\ChickMVC.csproj",
+        "projectUniqueName": "C:\\Users\\lab_services_student\\Documents\\GitHub\\DockerTemplate\\dockertemplate\\ChickMVC\\ChickMVC.csproj",
         "projectName": "ChickMVC",
-        "projectPath": "C:\\Users\\lab_services_student\\dockertemplate\\DockerChicken\\ChickMVC\\ChickMVC.csproj",
+        "projectPath": "C:\\Users\\lab_services_student\\Documents\\GitHub\\DockerTemplate\\dockertemplate\\ChickMVC\\ChickMVC.csproj",
         "packagesPath": "C:\\Users\\lab_services_student\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lab_services_student\\dockertemplate\\DockerChicken\\ChickMVC\\obj\\",
+        "outputPath": "C:\\Users\\lab_services_student\\Documents\\GitHub\\DockerTemplate\\dockertemplate\\ChickMVC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

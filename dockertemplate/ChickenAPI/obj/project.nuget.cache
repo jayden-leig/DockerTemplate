@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8e8ewu+65fk=",
+  "dgSpecHash": "+9CTuLF6Jro=",
   "success": true,
-  "projectFilePath": "C:\\Users\\lab_services_student\\dockertemplate\\DockerChicken\\ChickenAPI\\ChickenAPI.csproj",
+  "projectFilePath": "C:\\Users\\lab_services_student\\Documents\\GitHub\\DockerTemplate\\dockertemplate\\ChickenAPI\\ChickenAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lab_services_student\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\lab_services_student\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
