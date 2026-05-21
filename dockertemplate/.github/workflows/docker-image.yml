@@ -1,0 +1,137 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+
+  concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+  env:
+  FORCE_JAVASCRIPT_ACTION_TO_NODE24: 'true'
+
+jobs:
+
+#JOB 1 : Validates code layout, syntax formatting , and complication  rules early
+code-quality:
+name: Code Quality & Formatting
+run-on: ubuntu-latest
+steps:
+-name: Checkout Code
+uses: actions/checkout@v4
+
+-name: Setup .NET SDK
+uses : action/setups-dotnet@v4
+with:
+  dotnet-version: '10.0x'
+  cache: true
+  cache-dependency-path: '**/*.csproj'
+
+  #FIX: Executable steps taht use the configure cache layout to validate syntax stability
+  -name: Verify Code Formatting
+   run: dotnet format --verify-no-changes  --serverity warn
+
+  -name: Static Code Analysis
+   run: dornet build --configuration Release /warnaserror
+
+   #JOB 2 :Complies the source file  source file inside target Docker Configurations
+  complie-and-build:
+    name: Docker Build & Package
+    runs-on: ubuntu-latest
+    needs: code-qulaity #Only starts if static formatting checks pass cleanly
+    steps:
+   -name: CheckOut Code
+    uses: actions/checkout@v4
+
+  -name: Setup .NET SDK
+    uses: actionn/setup-dotnet@v4
+    with:
+      dotnet-version: '10.0x'
+      cache: true
+      cache-dependecy-path: '**/*.csproj'
+
+  -name: Build Appliction Containers
+    run: docker compose build
+
+   #JOB 3 : Spins up container layout and evalutaes cross-dependency integration
+  integration-testing: 
+    name: System Integration Verification
+    runs-on: ubuntu-latest
+    needs: complie-and-build #Only starts after Docker vuild successfully finalize
+    steps:
+    -name:Checkout Code
+    uses:  actions/checkout@v4
+  -name: Setup .NET SDK
+    uses: actionn/setup-dotnet@v4
+    with:
+      dotnet-version: '10.0x'
+      cache: true
+      cache-dependecy-path: '**/*.csproj'
+
+  -name:  Build and Launch Applictaion Mesh
+   run:docker compose up --build -d
+
+  -name: Grace Period for Database Boot
+  run: |
+      echo: Giving Microsoft SQL Server 25 seconds to complete tabale steps...
+      sleep 25 
+
+  -name: Wait for API Readiness
+   run: |
+    echo "Waiting for ChickenAPI to wake up at http://localhost:8080..."
+    timeout 60s sh - c ;until curl -sSf http://localhost:8080/GetMeEggs > /dev/null; do sleep 2; done'
+    echo "ChickenAPI is up and running!"
+
+  -name Intergartion Step 1 - Seed data via API
+  run: |
+   echo "Posting a new chicken playload to the databse..."
+   curl -X POST http://localhost:8080/api/Chicken\
+   -H "Content-Type: application/json" \
+   -d'{"name": "Cluck Norris, "breed": "Rhode Island Red"}' \
+   --fail -- verbose
+
+  -name: Integration Step 2 - Verify Front- end MVS Data Rendering
+   run: |
+   echo"Querying the Mvc webb application home page on port 80..."
+   MVC_RESPONSE=$(curl -s http://localhost:80)
+
+   echo "Asserting tha the font -end view sucessfully display the dynamic API string context..."
+   if echo "MVC_RESPONSE"  | grep  - q "Cluck Norris"; then
+   echo"SUCESS: MVC interface seccessfully fetched and display containerized API data!
+   else
+   echo"ERROR: data assertion failed. The MVC home page is not showing the injected database string 
+   exit 1
+   fi
+
+-name: Tear Down Mesh and Logs
+if: always()
+run:
+ docker compose logs api-service > api-container-debug.log
+ docker compose logs chick-db-service > db-container-debug.log
+ docker compose logs mvc-service > mvc-container-debug.log
+ docker compose down --volumes
+
+    #JOB 4 : AUTOMATED CONTINOUS DELIVERY TASKK GATED BEHIND PREVIOUD VALIDATION APPROVALS
+cd-deployment:\name: Production Cloud Deployment
+runs-on: ubuntu-latest
+needs: integration-testing
+if: github.ref == 'refs/heads/main' || github.ref == ' refs/heads/master'
+enviroment : Production
+steps:
+-name: Execute Server Infrastructure Sync
+run: |
+ echo "ALL automated test passe cleanly . Initiaing production handshake scriptd..."
+
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
